@@ -5,6 +5,19 @@ fileButton.addEventListener('change', function (e) {
 
         let storageRef = firebase.storage().ref('images/' + imageFile.name)
 
-        let task = storageRef.put(imageFile)
-    }
-})
+        let image = storageRef.put(imageFile)
+
+        if (image) {
+            firebase.storage().ref('images/' + imageFile.name).getDownloadURL().then(imageUrl => {
+
+                var uploadImage = document.querySelector('.images')
+                var imageElement = document.createElement('img')
+                imageElement.src = imageUrl;
+                uploadImage.appendChild(imageElement)
+            }
+            )
+        };
+    };
+
+});
+
